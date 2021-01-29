@@ -1,9 +1,11 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
 
-gem 'pg'
+source 'https://rubygems.org'
+
 gem 'capybara'
-gem 'sinatra'
+gem 'pg'
+gem 'rspec'
 gem 'rubocop'
 gem 'simplecov'
-gem 'rspec'
+gem 'sinatra'
 gem 'webrick'

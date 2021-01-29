@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require 'bookmark'
 require 'database_helpers'
 
 describe Bookmark do
-
   describe '#all' do
     it 'returns a list of bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      bookmark = Bookmark.create(url: "twitter.com", title: "Twitter")
+      bookmark = Bookmark.create(url: 'twitter.com', title: 'Twitter')
       bookmarks = Bookmark.all
       expect(bookmarks.length).to eq 1
       expect(bookmarks.first.id).to eq bookmark.id
@@ -26,6 +27,5 @@ describe Bookmark do
       expect(bookmark.title).to eq 'Twitter'
       expect(bookmark.url).to eq 'twitter.com'
     end
-  end 
-
+  end
 end
