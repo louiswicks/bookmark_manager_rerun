@@ -1,7 +1,7 @@
 feature "viewing bookmarks" do
   scenario "show all bookmarks" do
-    Bookmark.create(url: "twitter.com")
+    Bookmark.create(url: "twitter.com", title: "Twitter")
     visit '/bookmarks'
-    expect(page).to have_content "twitter.com"
+    expect(page).to have_link('Twitter', href: "twitter.com")
   end
 end

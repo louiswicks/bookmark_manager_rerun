@@ -1,4 +1,5 @@
 require 'bookmark'
+require 'database_helpers'
 
 describe Bookmark do
 
@@ -6,23 +7,25 @@ describe Bookmark do
     it 'returns a list of bookmarks' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      connection.exec("insert into bookmarks (url) VALUES ('twitter.com')")
-
+      bookmark = Bookmark.create(url: "twitter.com", title: "Twitter")
       bookmarks = Bookmark.all
-
-      result = connection.exec('SELECT * FROM bookmarks;')
-      result.each do |bookmark|
-        bookmark
-      end
-      expect(bookmarks).to include "twitter.com"
+      expect(bookmarks.length).to eq 1
+      expect(bookmarks.first.id).to eq bookmark.id
+      expect(bookmarks.first.title).to eq 'Twitter'
+      expect(bookmarks.first.url).to eq 'twitter.com'
     end
   end
 
-  describe '#create' do
+  describe '.create' do
     it 'creates a new bookmark' do
-    Bookmark.create('snapchat.com')
-    expect(Bookmark.all).to include 'snapchat.com'
-   end 
-  end
+      bookmark = Bookmark.create(url: 'twitter.com', title: 'Twitter')
+      persisted_data = persisted_data(id: bookmark.id)
+
+      expect(bookmark).to be_a Bookmark
+      expect(bookmark.id).to eq persisted_data['id']
+      expect(bookmark.title).to eq 'Twitter'
+      expect(bookmark.url).to eq 'twitter.com'
+    end
+  end 
 
 end
